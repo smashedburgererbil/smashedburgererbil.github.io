@@ -43,49 +43,6 @@
   }
 </style>
 
-<script src="https://cdn.tailwindcss.com"></script>
-<script>
-  tailwind.config = {
-    theme: {
-      extend: {
-        colors: {
-          base:        'rgb(var(--c-base) / <alpha-value>)',
-          surface:     'rgb(var(--c-surface) / <alpha-value>)',
-          surfaceAlt:  'rgb(var(--c-surface-alt) / <alpha-value>)',
-          ink:         'rgb(var(--c-ink) / <alpha-value>)',
-          muted:       'rgb(var(--c-muted) / <alpha-value>)',
-          edge:        'rgb(var(--c-edge) / <alpha-value>)',
-          accent:      'rgb(var(--c-accent) / <alpha-value>)',
-          accentHover: 'rgb(var(--c-accent-hover) / <alpha-value>)',
-          hot:         'rgb(var(--c-hot) / <alpha-value>)',
-          brand:       '#C4453A',
-          brandDark:   '#A8372E',
-          brandDeeper: '#8E2C25',
-          wood:        '#D4B896',
-          concrete:    '#C9C4BD',
-        },
-        fontFamily: {
-          display: ['"Playfair Display"', 'Georgia', 'serif'],
-          sans: ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
-        },
-        boxShadow: {
-          card: '0 10px 30px -12px var(--shadow-card)',
-          glow: '0 0 0 1px rgba(196,69,58,.4), 0 14px 44px -14px rgba(196,69,58,.55)',
-        },
-        keyframes: {
-          pulseBadge: { '0%,100%': { transform: 'scale(1)' }, '50%': { transform: 'scale(1.2)' } },
-          fadeIn:     { from: { opacity: '0' }, to: { opacity: '1' } },
-          riseIn:     { from: { opacity: '0', transform: 'translateY(10px)' }, to: { opacity: '1', transform: 'translateY(0)' } },
-        },
-        animation: {
-          pulseBadge: 'pulseBadge .35s ease-out',
-          fadeIn:     'fadeIn .2s ease-out',
-          riseIn:     'riseIn .5s cubic-bezier(.22,1,.36,1) both',
-        },
-      },
-    },
-  };
-</script>
 <script src="https://unpkg.com/lucide@0.451.0/dist/umd/lucide.js"></script>
 
 <style>
@@ -389,6 +346,8 @@
     cursor: pointer;
   }
 </style>
+<!-- Prebuilt Tailwind: loaded last so utilities win, like the old CDN build did. Rebuild with: npx tailwindcss@3.4.17 -c tailwind.config.js -i tailwind.input.css -o tailwind.css --minify -->
+<link rel="stylesheet" href="tailwind.css" />
 </head>
 
 <body class="min-h-screen bg-base font-sans text-ink antialiased selection:bg-brand/30">
@@ -402,9 +361,9 @@
   <div class="absolute inset-0 overflow-hidden" aria-hidden="true">
     <video
       class="absolute inset-0 h-full w-full object-cover object-center"
-      autoplay muted loop playsinline preload="auto"
+      autoplay muted loop playsinline preload="auto" poster="image/videoentry-poster.webp"
     >
-      <source src="image/videoentry.MP4" type="video/mp4" />
+      <source src="image/videoentry-web.mp4" type="video/mp4" />
     </video>
 
     <div class="intro-overlay absolute inset-0"></div>
@@ -703,7 +662,7 @@
             <span class="tnum" dir="ltr">11:30 AM – 12:00 AM</span>
           </p>
 
-          <details class="group mt-4 overflow-hidden rounded-2xl bg-white/12 ring-1 ring-white/25 backdrop-blur">
+          <details class="group mt-4 overflow-hidden rounded-2xl bg-white/[.12] ring-1 ring-white/25 backdrop-blur">
             <summary class="footer-summary flex items-center justify-between gap-3 px-4 py-3.5">
               <div class="flex items-center gap-2.5 min-w-0">
                 <i data-lucide="clock" class="h-4 w-4 shrink-0 text-white"></i>
@@ -802,7 +761,7 @@ const MODIFIER_SETS = {
     ]},
     { id: 'addons', type: 'multi', labelKey: 'addons', options: [
       { id: 'cheese', label: { en: 'Extra Cheese', ar: 'جبنة إضافية', ku: 'پەنیری زیادە' }, price: 1000 },
-      { id: 'patty',  label: { en: 'Extra Patty',  ar: 'قطعة إضافية', ku: 'گۆشتی زیادە' },  price: 3000 },
+      { id: 'patty',  label: { en: 'Extra Patty',  ar: 'قطعة لحم إضافية', ku: 'گۆشتی زیادە' },  price: 3000 },
       { id: 'sauce',  label: { en: 'Extra Sauce',  ar: 'صوص إضافي',  ku: 'سۆسی زیادە' },   price: 500  },
     ]},
     { id: 'removals', type: 'multi', labelKey: 'remove', options: [
@@ -816,7 +775,7 @@ const MODIFIER_SETS = {
     { id: 'addons', type: 'multi', labelKey: 'addons', options: [
       { id: 'cheese',    label: { en: 'Extra Cheese',    ar: 'جبنة إضافية',       ku: 'پەنیری زیادە' },       price: 1000 },
       { id: 'sauce',     label: { en: 'Extra Sauce',     ar: 'صوص إضافي',         ku: 'سۆسی زیادە' },         price: 500  },
-      { id: 'spice-mix', label: { en: 'Extra Spice Mix', ar: 'خلطة حارّة إضافية', ku: 'بەهاراتی زیادە' }, price: 250  },
+      { id: 'spice-mix', label: { en: 'Extra Spice Mix', ar: 'بهارات إضافية', ku: 'بەهاراتی زیادە' }, price: 250  },
     ]},
   ],
   drink: [
@@ -832,42 +791,42 @@ const MODIFIER_SETS = {
 const MENU = [
   { id:'og-smash-burger', category:'burgers',
     name:{en:'OG Smash Burger', ar:'أو جي سماش برجر', ku:'ئۆ جی سماش بەرگەر'},
-    desc:{en:'The original double smash with cheese, pickles, onion & house sauce', ar:'البرجر الأصلي المضغوط مع الجبنة، المخلل، البصل وصوص البيت', ku:'بەرگەری ڕەسەنی دوو قات لەگەڵ پەنیر، خەیارشۆر، پیاز و سۆسی هاوس'},
+    desc:{en:'The original double smash with cheese, pickles, onion & house sauce', ar:'سماش برجر الأصلي بقطعتي لحم مع الجبنة والمخلل والبصل وصوص الهاوس', ku:'بەرگەری ڕەسەنی دوو قات لەگەڵ پەنیر، خەیارشۆر، پیاز و سۆسی هاوس'},
     price:8500, emoji:'🍔', gradient:'from-brand/40 to-zinc-900/30',
     image:'image/Ogsmashburger.webp',
     tags:['chef'], modifierSet:'burger', available:true },
 
   { id:'all-american-burger', category:'burgers',
-    name:{en:'All American Burger', ar:'برجر أمريكي كلاسيك', ku:'ئۆڵ ئەمریکان بەرگەر'},
-    desc:{en:'Classic beef smash with cheddar, lettuce, tomato & American sauce', ar:'برجر لحم كلاسيكي مع شيدر، خس، طماطم وصوص أمريكي', ku:'بەرگەری گۆشتی کلاسیک لەگەڵ پەنیری چێدار، کاهوو، تەماتە و سۆسی ئەمریکی'},
+    name:{en:'All American Burger', ar:'أول أمريكان برجر', ku:'ئۆڵ ئەمریکان بەرگەر'},
+    desc:{en:'Classic beef smash with cheddar, lettuce, tomato & American sauce', ar:'سماش لحم كلاسيكي مع جبنة الشيدر والخس والطماطم والصوص الأمريكي', ku:'بەرگەری گۆشتی کلاسیک لەگەڵ پەنیری چێدار، کاهوو، تەماتە و سۆسی ئەمریکی'},
     price:8500, emoji:'🇺🇸', gradient:'from-brandDark/40 to-zinc-900/25',
     image:'image/allamericanburger.webp',
     tags:[], modifierSet:'burger', available:true },
 
   { id:'jalapeno-burger', category:'burgers',
-    name:{en:'Jalapeño Burger', ar:'برجر هالبينو', ku:'بەرگەری هالاپینۆ'},
-    desc:{en:'Smash patty loaded with jalapeños, pepper jack & spicy mayo', ar:'قطعة مضغوطة مع الهالبينو، جبنة الفلفل ومايونيز حار', ku:'گۆشتی سماشکراو لەگەڵ هالاپینۆ، پەنیری پێپەر جاک و مایۆنێزی تیژ'},
+    name:{en:'Jalapeño Burger', ar:'برجر هالابينو', ku:'بەرگەری هالاپینۆ'},
+    desc:{en:'Smash patty loaded with jalapeños, pepper jack & spicy mayo', ar:'قطعة لحم سماش مع الهالابينو وجبنة بيبر جاك ومايونيز حار', ku:'گۆشتی سماشکراو لەگەڵ هالاپینۆ، پەنیری پێپەر جاک و مایۆنێزی تیژ'},
     price:8500, emoji:'🌶️', gradient:'from-brandDeeper/40 to-zinc-900/25',
     image:'image/jalapenoburger.webp',
     tags:['spicy','chef'], modifierSet:'burger', available:true },
 
   { id:'golden-crunch-chicken-burger', category:'burgers',
     name:{en:'Golden Crunch Chicken Burger', ar:'برجر الدجاج المقرمش الذهبي', ku:'بەرگەری مریشکی کرانچی زێڕین'},
-    desc:{en:'Crispy chicken fillet with signature Golden Crunch sauce & pickles', ar:'فيليه دجاج مقرمش مع صوص القرمشة الذهبية والمخلل', ku:'فیلێی مریشکی کرسپی لەگەڵ سۆسی تایبەتی کرانچی زێڕین و خەیارشۆر'},
+    desc:{en:'Crispy chicken fillet with signature Golden Crunch sauce & pickles', ar:'فيليه دجاج مقرمش مع صوص القرمشة الذهبية الخاص والمخلل', ku:'فیلێی مریشکی کرسپی لەگەڵ سۆسی تایبەتی کرانچی زێڕین و خەیارشۆر'},
     price:7500, emoji:'🍔', gradient:'from-brand/35 to-zinc-800/20',
     image:'image/Goldencrunchchickenburger.webp',
     tags:['chef','new'], modifierSet:'burger', available:true },
 
   { id:'hot-chicken-burger', category:'burgers',
     name:{en:'Hot Chicken Burger', ar:'برجر الدجاج الحار', ku:'بەرگەری مریشکی تیژ'},
-    desc:{en:'Crispy chicken, lettuce, cheese, tomato with hot spice blend', ar:'دجاج مقرمش، خس، جبنة، طماطم مع خلطة التوابل الحارّة', ku:'مریشکی کرسپی، کاهوو، پەنیر و تەماتە لەگەڵ تێکەڵەی بەهاراتی تیژ'},
+    desc:{en:'Crispy chicken, lettuce, cheese, tomato with hot spice blend', ar:'دجاج مقرمش مع الخس والجبنة والطماطم وخلطة بهارات حارّة', ku:'مریشکی کرسپی، کاهوو، پەنیر و تەماتە لەگەڵ تێکەڵەی بەهاراتی تیژ'},
     price:7500, emoji:'🔥', gradient:'from-brand/35 to-zinc-900/25',
     image:'image/Hotchickenburger.webp',
     tags:['spicy'], modifierSet:'burger', available:true },
 
   { id:'sweet-heat-chicken-burger', category:'burgers',
-    name:{en:'Sweet Heat Chicken Burger', ar:'برجر الدجاج الحلو الحار', ku:'بەرگەری مریشکی شیرین و تیژ'},
-    desc:{en:'Crispy chicken glazed in sweet-heat sauce with lettuce, cheese & tomato', ar:'دجاج مقرمش بصوص حلو حار مع خس، جبنة وطماطم', ku:'مریشکی کرسپی بە سۆسی شیرین و تیژ، لەگەڵ کاهوو، پەنیر و تەماتە'},
+    name:{en:'Sweet Heat Chicken Burger', ar:'برجر الدجاج الحلو والحار', ku:'بەرگەری مریشکی شیرین و تیژ'},
+    desc:{en:'Crispy chicken glazed in sweet-heat sauce with lettuce, cheese & tomato', ar:'دجاج مقرمش مغطّى بصوص حلو وحار مع الخس والجبنة والطماطم', ku:'مریشکی کرسپی بە سۆسی شیرین و تیژ، لەگەڵ کاهوو، پەنیر و تەماتە'},
     price:7500, emoji:'🍔', gradient:'from-brandDark/35 to-zinc-800/20',
     image:'image/Sweetheatchickenburger.webp',
     tags:['new'], modifierSet:'burger', available:true },
@@ -887,28 +846,28 @@ const MENU = [
     tags:['spicy','chef'], modifierSet:'side', available:true },
 
   { id:'jalapeno-poppers', category:'sides',
-    name:{en:'Jalapeño Poppers', ar:'فلفل هالبينو محشي', ku:'هالاپینۆ پۆپەرز'},
-    desc:{en:'Crispy jalapeño poppers with a cheese filling', ar:'فلفل هالبينو مقرمش محشي بالجبنة', ku:'هالاپینۆی کرسپی پڕکراو بە پەنیر'},
+    name:{en:'Jalapeño Poppers', ar:'هالابينو محشي بالجبنة', ku:'هالاپینۆ پۆپەرز'},
+    desc:{en:'Crispy jalapeño poppers with a cheese filling', ar:'فلفل هالابينو مقرمش محشي بالجبنة', ku:'هالاپینۆی کرسپی پڕکراو بە پەنیر'},
     price:6500, emoji:'🌶️', gradient:'from-zinc-400/25 to-zinc-800/15',
     image:'image/jalapenopoppers.webp',
     tags:['spicy'], modifierSet:'side', available:true },
 
   { id:'chicken-popcorn', category:'sides',
-    name:{en:'Chicken Popcorn', ar:'بوب كورن الدجاج', ku:'پۆپکۆرنی مریشک'},
+    name:{en:'Chicken Popcorn', ar:'بوب كورن دجاج', ku:'پۆپکۆرنی مریشک'},
     desc:{en:'Chicken popcorn with spice', ar:'قطع دجاج صغيرة متبلة', ku:'پارچە بچووکی مریشکی کرسپی بە بەهارات'},
     price:5500, emoji:'🍿', gradient:'from-zinc-500/25 to-zinc-700/15',
     image:'image/chickenpopcorn.webp',
     tags:[], modifierSet:'side', available:true },
 
   { id:'loaded-fries', category:'sides',
-    name:{en:'Loaded Fries', ar:'بطاطا محملة', ku:'پەتاتەی لۆدید'},
-    desc:{en:'Loaded fries with salt and pepper', ar:'بطاطا محملة بالملح والفلفل', ku:'پەتاتەی سوورکراو لەگەڵ خوێ و بیبەر'},
+    name:{en:'Loaded Fries', ar:'بطاطا لودد', ku:'پەتاتەی لۆدید'},
+    desc:{en:'Loaded fries with salt and pepper', ar:'بطاطا مقلية بالملح والفلفل', ku:'پەتاتەی سوورکراو لەگەڵ خوێ و بیبەر'},
     price:7000, emoji:'🍟', gradient:'from-brandDark/30 to-zinc-900/20',
     image:'image/loadedfries.webp',
     tags:['chef'], modifierSet:'side', available:true },
 
   { id:'classic-fries', category:'sides',
-    name:{en:'Classic Fries', ar:'بطاطا كلاسيك', ku:'پەتاتەی سوورکراوی کلاسیک'},
+    name:{en:'Classic Fries', ar:'بطاطا مقلية كلاسيكية', ku:'پەتاتەی سوورکراوی کلاسیک'},
     desc:{en:'1 Plate', ar:'طبق واحد', ku:'یەک قاپ'},
     price:3000, emoji:'🥔', gradient:'from-zinc-400/20 to-zinc-700/15',
     image:'image/classicfries.webp',
@@ -936,7 +895,7 @@ const MENU = [
     tags:['spicy'], modifierSet:'none', available:true },
 
   { id:'house-sauce', category:'sauces',
-    name:{en:'House Sauce', ar:'صوص البيت', ku:'سۆسی هاوس'},
+    name:{en:'House Sauce', ar:'صوص الهاوس', ku:'سۆسی هاوس'},
     desc:{en:'Per cup', ar:'لكل كوب', ku:'بۆ هەر کوپێک'},
     price:1500, emoji:'🥫', gradient:'from-zinc-500/25 to-zinc-800/15',
     image:'image/House.webp',
@@ -944,20 +903,20 @@ const MENU = [
 
   { id:'golden-crunch-sauce', category:'sauces',
     name:{en:'Golden Crunch Sauce', ar:'صوص القرمشة الذهبية', ku:'سۆسی کرانچی زێڕین'},
-    desc:{en:'Signature sauce · per cup', ar:'الصوص المميز · لكل كوب', ku:'سۆسی تایبەت · بۆ هەر کوپێک'},
+    desc:{en:'Signature sauce · per cup', ar:'صوصنا الخاص · لكل كوب', ku:'سۆسی تایبەت · بۆ هەر کوپێک'},
     price:1500, emoji:'✨', gradient:'from-brand/30 to-zinc-800/15',
     image:'image/goldencrunch.webp',
     tags:['chef'], modifierSet:'none', available:true },
 
   { id:'bbq-sauce', category:'sauces',
-    name:{en:'BBQ Sauce', ar:'صوص باربكيو', ku:'سۆسی باربیکیو'},
+    name:{en:'BBQ Sauce', ar:'صوص باربيكيو', ku:'سۆسی باربیکیو'},
     desc:{en:'Per cup', ar:'لكل كوب', ku:'بۆ هەر کوپێک'},
     price:1500, emoji:'🥫', gradient:'from-brandDeeper/30 to-zinc-900/20',
     image:'image/BBQ.webp',
     tags:[], modifierSet:'none', available:true },
 
   { id:'honey-mustard', category:'sauces',
-    name:{en:'Honey Mustard', ar:'عسل وخردل', ku:'سۆسی هەنگوین و خەردەل'},
+    name:{en:'Honey Mustard', ar:'صوص العسل والخردل', ku:'سۆسی هەنگوین و خەردەل'},
     desc:{en:'Per cup', ar:'لكل كوب', ku:'بۆ هەر کوپێک'},
     price:1500, emoji:'🍯', gradient:'from-zinc-400/25 to-zinc-700/15',
     image:'image/honeymustard.webp',
@@ -971,7 +930,7 @@ const MENU = [
     tags:[], modifierSet:'none', available:true },
 
   { id:'hot-honey-ranch', category:'sauces',
-    name:{en:'Hot Honey Ranch', ar:'رانش بالعسل الحار', ku:'سۆسی ڕانچی هەنگوینی تیژ'},
+    name:{en:'Hot Honey Ranch', ar:'صوص رانش بالعسل الحار', ku:'سۆسی ڕانچی هەنگوینی تیژ'},
     desc:{en:'Per cup', ar:'لكل كوب', ku:'بۆ هەر کوپێک'},
     price:1500, emoji:'🔥', gradient:'from-brand/30 to-zinc-900/20',
     image:'image/hothoney.webp',
@@ -979,28 +938,28 @@ const MENU = [
 
   { id:'pepsi', category:'drinks',
     name:{en:'Pepsi', ar:'بيبسي', ku:'پێپسی'},
-    desc:{en:'Chilled can', ar:'علبة مبردة', ku:'قوتووی سارد'},
+    desc:{en:'Chilled can', ar:'علبة باردة', ku:'قوتووی سارد'},
     price:1500, emoji:'🥤', gradient:'from-zinc-500/25 to-zinc-800/15',
     image:'image/pepsi.webp',
     tags:[], modifierSet:'drink', available:true },
 
   { id:'diet-pepsi', category:'drinks',
     name:{en:'Diet Pepsi', ar:'بيبسي دايت', ku:'پێپسی دایت'},
-    desc:{en:'Chilled can', ar:'علبة مبردة', ku:'قوتووی سارد'},
+    desc:{en:'Chilled can', ar:'علبة باردة', ku:'قوتووی سارد'},
     price:1500, emoji:'🥤', gradient:'from-zinc-400/20 to-zinc-700/15',
     image:'image/dietpepsi.webp',
     tags:[], modifierSet:'drink', available:true },
 
   { id:'mirinda-orange', category:'drinks',
     name:{en:'Mirinda Orange', ar:'ميرندا برتقال', ku:'میرندا پرتەقاڵ'},
-    desc:{en:'Chilled can', ar:'علبة مبردة', ku:'قوتووی سارد'},
+    desc:{en:'Chilled can', ar:'علبة باردة', ku:'قوتووی سارد'},
     price:1500, emoji:'🍊', gradient:'from-brand/25 to-zinc-800/15',
     image:'image/mirandaorange.webp',
     tags:[], modifierSet:'drink', available:true },
 
   { id:'seven-up', category:'drinks',
     name:{en:'7 Up', ar:'سفن أب', ku:'سێڤن ئەپ'},
-    desc:{en:'Chilled can', ar:'علبة مبردة', ku:'قوتووی سارد'},
+    desc:{en:'Chilled can', ar:'علبة باردة', ku:'قوتووی سارد'},
     price:1500, emoji:'🥤', gradient:'from-zinc-500/20 to-zinc-700/10',
     image:'image/7up.webp',
     tags:[], modifierSet:'drink', available:true },
@@ -1106,42 +1065,42 @@ const I18N = {
   ar: {
     htmlLang:'ar', dir:'rtl', shortLabel:'ع', nativeName:'العربية',
     brand:'سماشد برجر', tagline:'برجر وأكثر', restaurant:'مطعم',
-    searchPlaceholder:'ابحث عن برجر، أطباق جانبية، صوصات…', clearSearch:'مسح البحث',
-    catAll:'الكل', catBurgers:'البرجر', catSides:'الأطباق الجانبية', catSauces:'الصوصات', catDrinks:'المشروبات',
+    searchPlaceholder:'ابحث عن برجر، مقبلات، صوصات…', clearSearch:'مسح البحث',
+    catAll:'الكل', catBurgers:'البرجر', catSides:'المقبلات', catSauces:'الصوصات', catDrinks:'المشروبات',
     customize:'تخصيص', addToCart:'إضافة', addToCartWithPrice:'أضف إلى السلة',
     tagSpicy:'حار', tagChef:'اختيار الشيف', tagVegan:'نباتي', tagNew:'جديد',
     noResults:'لا توجد نتائج مطابقة', noResultsHint:'جرّب بحثاً أو تصنيفاً آخر.',
-    spiceLevel:'مستوى الحرارة', addons:'إضافات', remove:'إزالة', ice:'الثلج', required:'مطلوب',
+    spiceLevel:'درجة الحار', addons:'إضافات', remove:'إزالة', ice:'الثلج', required:'مطلوب',
     quantity:'الكمية', cartTitle:'طلبك',
     cartEmpty:'سلتك فارغة', cartEmptyHint:'أضف شيئاً لذيذاً من القائمة.',
     browseMenu:'تصفح القائمة', clearCart:'مسح', checkout:'إتمام الطلب',
-    subtotal:'المجموع الفرعي', total:'المجموع',
-    deliveryNote:'يُحسب التوصيل والضرائب عند إتمام الطلب.',
+    subtotal:'المجموع الفرعي', total:'الإجمالي',
+    deliveryNote:'تُحسب رسوم التوصيل والضرائب عند إتمام الطلب.',
     viewCart:'عرض السلة',
     openMenu:'القائمة',
     addedToast:'تمت الإضافة إلى السلة', clearedToast:'تم مسح السلة', removedToast:'تمت الإزالة من السلة',
-    checkoutToast:'الدفع متاح في نسخة الإنتاج (المسار B).',
-    menuTitle:'قائمتنا', menuSubtitle:'طازج، سماشد، ويُحضّر عند الطلب.',
+    checkoutToast:'إتمام الطلب سيكون متاحاً قريباً.',
+    menuTitle:'قائمتنا', menuSubtitle:'برجر سماش طازج، يُحضّر عند الطلب.',
     decrease:'تقليل الكمية', increase:'زيادة الكمية', removeLine:'إزالة العنصر',
     themeToDark:'التبديل إلى الوضع الداكن', themeToLight:'التبديل إلى الوضع الفاتح',
-    footerTagline:'سماشد. مقرمش. ذهبي. يُحضّر طازجاً عند الطلب، في كل مرة.',
-    infoTitle:'سماشد. مقرمش. ذهبي.',
-    infoText:'شكراً لزيارتكم. كل برجر يُضغط طازجاً لحظة الطلب — ساخن، طري، ومكدّس بتلك القرمشة الذهبية.',
+    footerTagline:'سماش. مقرمش. ذهبي. يُحضّر طازجاً عند الطلب، في كل مرة.',
+    infoTitle:'سماش. مقرمش. ذهبي.',
+    infoText:'شكراً لزيارتكم. كل برجر يُضغط طازجاً على الصاج لحظة طلبه — ساخن، مليء بالعصارة، ومع تلك القرمشة الذهبية.',
     contactTitle:'تواصل معنا',
     openingHours:'ساعات العمل',
     weeklySchedule:'الجدول الأسبوعي',
     openNow:'مفتوح الآن',
     closedNow:'مغلق',
     openDaily:'مفتوح يومياً',
-    hoursNote:'الأوقات معروضة بتوقيت بغداد المحلي.',
+    hoursNote:'الأوقات حسب توقيت بغداد.',
     addressLine1:'شارع كولان، البوليفارد',
     addressLine2:'أربيل، محافظة أربيل، 44001، العراق',
     whatsappCta:'واتساب',
     callCta:'اتصال',
     chatCta:'محادثة',
-    directionsCta:'الاتجاهات',
+    directionsCta:'الموقع',
     rights:'جميع الحقوق محفوظة.',
-    poweredBy:'مدعوم بواسطة',
+    poweredBy:'تصميم',
   },
   ku: {
     htmlLang:'ckb', dir:'rtl', shortLabel:'ک', nativeName:'کوردی',
@@ -1239,6 +1198,16 @@ function lineKey(itemId, selections) {
     .map((gid) => gid + ':' + [...(selections[gid] || [])].sort().join(','))
     .join('|');
   return itemId + '#' + parts;
+}
+
+// Small versions of item/slide photos live in image/thumb/ (full size is kept for the item popup)
+function thumbSrc(src) { return String(src).replace(/^image\//, 'image/thumb/'); }
+
+// Warm the browser cache with every card and slide image while the intro screen is showing,
+// so the menu appears instantly when the customer taps "Menu"
+function preloadMenuImages() {
+  const urls = [...HERO_SLIDES.map((s) => thumbSrc(s.src)), ...MENU.filter((m) => m.image).map((m) => thumbSrc(m.image))];
+  urls.forEach((u) => { const img = new Image(); img.decoding = 'async'; img.src = u; });
 }
 
 function clampQty(n) {
@@ -1764,7 +1733,7 @@ function renderItemMedia(item, opts) {
   if (item.image) {
     return '<div class="item-media bg-gradient-to-br ' + esc(item.gradient) + '">' +
       '<span class="absolute inset-0 grid place-items-center ' + sizeClass + '" aria-hidden="true">' + esc(item.emoji) + '</span>' +
-      '<img src="' + esc(item.image) + '" alt="' + esc(tx(item.name)) + '" loading="lazy" decoding="async" ' +
+      '<img src="' + esc(thumbSrc(item.image)) + '" alt="' + esc(tx(item.name)) + '" loading="lazy" decoding="async" ' +
         'onerror="this.style.display=\'none\'" />' +
       (tagPills ? '<div class="absolute top-2 start-2 z-10 flex flex-col gap-1">' + tagPills + '</div>' : '') +
       plus +
@@ -1927,7 +1896,7 @@ function renderCart() {
     const thumb = item.image
       ? '<div class="relative h-14 w-14 shrink-0 overflow-hidden rounded-xl bg-gradient-to-br ' + esc(item.gradient) + '">' +
           '<span class="absolute inset-0 grid place-items-center text-2xl" aria-hidden="true">' + esc(item.emoji) + '</span>' +
-          '<img src="' + esc(item.image) + '" alt="" class="absolute inset-0 h-full w-full object-cover" loading="lazy" onerror="this.style.display=\'none\'" />' +
+          '<img src="' + esc(thumbSrc(item.image)) + '" alt="" class="absolute inset-0 h-full w-full object-cover" loading="lazy" onerror="this.style.display=\'none\'" />' +
         '</div>'
       : '<div class="grid h-14 w-14 shrink-0 place-items-center rounded-xl bg-gradient-to-br ' + esc(item.gradient) + ' text-2xl">' +
           '<span aria-hidden="true">' + esc(item.emoji) + '</span>' +
@@ -2241,8 +2210,8 @@ function renderHeroSlider() {
 
   track.innerHTML = HERO_SLIDES.map((s, i) =>
     '<div class="hero-slide">' +
-      '<img src="' + esc(s.src) + '" alt="' + esc(s.alt) + '" ' +
-        'loading="' + (i === 0 ? 'eager' : 'lazy') + '" ' +
+      '<img src="' + esc(thumbSrc(s.src)) + '" srcset="' + esc(thumbSrc(s.src)) + ' 828w, ' + esc(s.src) + ' 1242w" sizes="(min-width: 1152px) 1152px, 100vw" alt="' + esc(s.alt) + '" ' +
+        'loading="' + (i === 0 ? 'eager' : 'lazy') + '" ' + (i === 0 ? 'fetchpriority="high" ' : '') +
         'decoding="async" draggable="false" ' +
         'onerror="this.style.display=\'none\'" />' +
     '</div>'
@@ -2483,6 +2452,7 @@ function init() {
   applyLocale();
   initHeroSlider();
   showIntro();
+  preloadMenuImages();
   renderCart();
   renderFloatingBar();
   refreshIcons();
