@@ -5,6 +5,18 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
 <meta name="theme-color" content="#F5F2EC" id="themeColorMeta" />
 <title>Smashed Burger — Digital Menu</title>
+<meta name="description" content="Smashed Burger Erbil — browse the menu and order from your table. Burgers, sides, sauces &amp; drinks." />
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="Smashed Burger" />
+<meta property="og:title" content="Smashed Burger — Digital Menu" />
+<meta property="og:description" content="Browse the menu and order from your table. Burgers, sides, sauces &amp; drinks — Erbil." />
+<meta property="og:url" content="https://smashedburgererbil.github.io/" />
+<meta property="og:image" content="https://smashedburgererbil.github.io/image/share-preview.jpg" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:image:alt" content="Smashed Burger logo" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:image" content="https://smashedburgererbil.github.io/image/share-preview.jpg" />
 <link rel="icon" type="image/png" sizes="32x32" href="image/favicon-32.png" />
 <link rel="icon" type="image/png" sizes="192x192" href="image/favicon-192.png" />
 <link rel="apple-touch-icon" href="image/apple-touch-icon.png" />
@@ -348,6 +360,8 @@
 </style>
 <!-- Prebuilt Tailwind: loaded last so utilities win, like the old CDN build did. Rebuild with: npx tailwindcss@3.4.17 -c tailwind.config.js -i tailwind.input.css -o tailwind.css --minify -->
 <link rel="stylesheet" href="tailwind.css" />
+<!-- Visitor stats (GoatCounter — free, no cookies). Dashboard: https://smashedburgererbil.goatcounter.com -->
+<script data-goatcounter="https://smashedburgererbil.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
 </head>
 
 <body class="min-h-screen bg-base font-sans text-ink antialiased selection:bg-brand/30">
@@ -1061,6 +1075,7 @@ const I18N = {
     directionsCta:'Directions',
     rights:'All rights reserved.',
     poweredBy:'Powered by',
+    orderType:'Order type', dineIn:'Dine in', takeaway:'Takeaway', tableNumber:'Table number', tablePlaceholder:'e.g. 5', tableRequired:'Please enter your table number', sendOrder:'Send order on WhatsApp', sentToast:'Your order is ready in WhatsApp — tap Send', orderNote:'Your order goes straight to the cashier on WhatsApp.',
   },
   ar: {
     htmlLang:'ar', dir:'rtl', shortLabel:'ع', nativeName:'العربية',
@@ -1101,6 +1116,7 @@ const I18N = {
     directionsCta:'الموقع',
     rights:'جميع الحقوق محفوظة.',
     poweredBy:'تصميم',
+    orderType:'نوع الطلب', dineIn:'داخل المطعم', takeaway:'سفري', tableNumber:'رقم الطاولة', tablePlaceholder:'مثال: 5', tableRequired:'يرجى إدخال رقم الطاولة', sendOrder:'إرسال الطلب عبر واتساب', sentToast:'طلبك جاهز في واتساب — اضغط إرسال', orderNote:'يُرسل طلبك مباشرة إلى الكاشير عبر واتساب.',
   },
   ku: {
     htmlLang:'ckb', dir:'rtl', shortLabel:'ک', nativeName:'کوردی',
@@ -1141,6 +1157,7 @@ const I18N = {
     directionsCta:'نەخشە',
     rights:'هەموو مافەکان پارێزراون.',
     poweredBy:'دروستکراوە لەلایەن',
+    orderType:'جۆری داواکاری', dineIn:'لە چێشتخانە', takeaway:'بۆ بردنەوە', tableNumber:'ژمارەی مێز', tablePlaceholder:'بۆ نموونە 5', tableRequired:'تکایە ژمارەی مێزەکەت بنووسە', sendOrder:'ناردنی داواکاری بە واتساپ', sentToast:'داواکارییەکەت لە واتساپ ئامادەیە — ناردن دابگرە', orderNote:'داواکارییەکەت ڕاستەوخۆ بە واتساپ بۆ کاشێر دەنێردرێت.',
   },
 };
 
@@ -1210,6 +1227,20 @@ function preloadMenuImages() {
   urls.forEach((u) => { const img = new Image(); img.decoding = 'async'; img.src = u; });
 }
 
+// Arabic-Indic (٠-٩) and Persian/Kurdish (۰-۹) digits → 0-9
+function toLatinDigits(s) {
+  return String(s).replace(/[٠-٩۰-۹]/g, (d) => String(d.charCodeAt(0) & 0xF));
+}
+
+// Privacy-friendly visitor stats (GoatCounter, no cookies). Does nothing until the script has loaded.
+function track(name) {
+  try {
+    if (window.goatcounter && typeof window.goatcounter.count === 'function') {
+      window.goatcounter.count({ path: name, title: name, event: true });
+    }
+  } catch { /* stats must never break the menu */ }
+}
+
 function clampQty(n) {
   const x = Math.trunc(Number(n));
   if (!Number.isFinite(x)) return 1;
@@ -1228,6 +1259,8 @@ const state = {
   cart: [],
   openItemId: null,
   draftSelections: {},
+  orderType: 'dine-in',
+  table: '',
   draftQty: 1,
   introVisible: true,
   isOpen: false,
@@ -1383,6 +1416,46 @@ function removeLine(lineId) {
   renderFloatingBar();
   refreshIcons();
   showToast(t('removedToast'));
+}
+
+/* The cashier always receives the order in English, whatever language the customer browses in */
+function buildOrderMessage() {
+  const lines = ['🍔 New order – Smashed Burger'];
+  lines.push(state.orderType === 'takeaway' ? '🛍️ Takeaway' : '🪑 Table ' + state.table);
+  lines.push('');
+  for (const line of state.cart) {
+    const item = findItem(line.itemId);
+    if (!item) continue;
+    lines.push(line.qty + '× ' + tx(item.name, 'en') + ' — ' + formatPrice(unitPrice(item, line.selections) * line.qty, 'en'));
+    const groups = MODIFIER_SETS[item.modifierSet] || [];
+    const picks = [];
+    for (const g of groups) {
+      for (const optId of line.selections[g.id] || []) {
+        const opt = g.options.find((o) => o.id === optId);
+        if (opt) picks.push(tx(opt.label, 'en'));
+      }
+    }
+    if (picks.length) lines.push('   • ' + picks.join(', '));
+  }
+  lines.push('');
+  lines.push('Total: ' + formatPrice(cartSubtotal(), 'en'));
+  return lines.join('\n');
+}
+
+function sendOrderOnWhatsApp() {
+  if (state.cart.length === 0) return;
+  if (state.orderType === 'dine-in' && !state.table) {
+    showToast(t('tableRequired'));
+    const input = $('tableInput');
+    if (input) input.focus();
+    return;
+  }
+  track('order/' + state.orderType);
+  const url = STORE.whatsapp + '?text=' + encodeURIComponent(buildOrderMessage());
+  const win = window.open(url, '_blank');
+  if (win) win.opener = null;
+  else window.location.href = url;
+  showToast(t('sentToast'));
 }
 
 function clearCart() {
@@ -1934,20 +2007,39 @@ function renderCart() {
   }).join('');
 
   const subtotal = cartSubtotal();
+  const dineIn = state.orderType === 'dine-in';
+  const segBtn = (type, labelKey, icon) => {
+    const on = state.orderType === type;
+    return '<button type="button" data-order-type="' + type + '" aria-pressed="' + (on ? 'true' : 'false') + '" ' +
+      'class="flex flex-1 items-center justify-center gap-1.5 rounded-lg px-3 py-2 text-xs font-bold transition ' +
+        (on ? 'bg-brand text-white shadow-card' : 'text-muted hover:text-ink') + '">' +
+      '<i data-lucide="' + icon + '" class="h-3.5 w-3.5"></i>' + esc(t(labelKey)) +
+    '</button>';
+  };
+
   footer.innerHTML =
-    '<div class="flex items-center justify-between text-sm">' +
-      '<span class="text-muted">' + esc(t('subtotal')) + '</span>' +
-      '<span class="tnum font-semibold">' + esc(formatPrice(subtotal)) + '</span>' +
+    '<div class="flex rounded-xl bg-surfaceAlt p-1 ring-1 ring-edge/5" role="group" aria-label="' + esc(t('orderType')) + '">' +
+      segBtn('dine-in', 'dineIn', 'utensils') +
+      segBtn('takeaway', 'takeaway', 'shopping-bag') +
     '</div>' +
-    '<div class="mt-2 flex items-center justify-between text-base">' +
+    (dineIn
+      ? '<label class="mt-3 flex items-center gap-3 rounded-xl bg-surfaceAlt px-3 py-2 ring-1 ring-edge/5 focus-within:ring-2 focus-within:ring-brand/60">' +
+          '<i data-lucide="armchair" class="h-4 w-4 shrink-0 text-brand"></i>' +
+          '<span class="text-sm font-semibold">' + esc(t('tableNumber')) + '</span>' +
+          '<input id="tableInput" type="text" inputmode="numeric" maxlength="4" autocomplete="off" dir="ltr" ' +
+            'value="' + esc(state.table) + '" placeholder="' + esc(t('tablePlaceholder')) + '" ' +
+            'class="tnum ms-auto w-20 rounded-lg border-0 bg-surface px-2 py-1.5 text-center text-sm font-bold text-ink ring-1 ring-edge/10 placeholder:font-normal placeholder:text-muted focus:ring-brand/60" />' +
+        '</label>'
+      : '') +
+    '<div class="mt-3 flex items-center justify-between text-[1rem] text-ink">' +
       '<span class="font-display">' + esc(t('total')) + '</span>' +
       '<span class="tnum font-extrabold text-brand">' + esc(formatPrice(subtotal)) + '</span>' +
     '</div>' +
-    '<p class="mt-1.5 text-[11px] text-muted">' + esc(t('deliveryNote')) + '</p>' +
+    '<p class="mt-1 text-[11px] text-muted">' + esc(t('orderNote')) + '</p>' +
     '<button type="button" id="checkoutBtn" ' +
       'class="mt-3 flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-brand to-brandDark px-4 py-3 text-sm font-bold text-white transition hover:from-brandDark hover:to-brandDeeper active:scale-[.99]">' +
-      '<i data-lucide="credit-card" class="h-4 w-4"></i>' +
-      '<span>' + esc(t('checkout')) + '</span>' +
+      '<i data-lucide="send" class="h-4 w-4 rtl-flip"></i>' +
+      '<span>' + esc(t('sendOrder')) + '</span>' +
     '</button>';
 
   refreshIcons();
@@ -1984,6 +2076,7 @@ function openItemModal(itemId) {
   if (!item || !item.available) return;
 
   state.openItemId = itemId;
+  track('item/' + itemId);
   state.draftSelections = defaultSelectionsFor(item);
   state.draftQty = 1;
 
@@ -2060,7 +2153,7 @@ function renderModal() {
         '<div class="px-5 pt-4">' +
           '<h3 id="modalTitle" class="font-display text-xl leading-tight text-ink">' + esc(tx(item.name)) + '</h3>' +
           '<p class="mt-1 text-sm text-muted">' + esc(tx(item.desc)) + '</p>' +
-          '<p class="tnum mt-1.5 text-base font-bold text-brand">' + esc(formatPrice(item.price)) + '</p>' +
+          '<p class="tnum mt-1.5 text-[1rem] font-bold text-brand">' + esc(formatPrice(item.price)) + '</p>' +
         '</div>' +
       '</div>'
     : '<div class="relative shrink-0 bg-gradient-to-br ' + esc(item.gradient) + ' p-5">' +
@@ -2426,8 +2519,22 @@ $('drawerBody').addEventListener('click', (e) => {
   }
 });
 
+$('drawerFooter').addEventListener('input', (e) => {
+  if (e.target.id !== 'tableInput') return;
+  // Digits only (also accepts Arabic/Kurdish digits typed on the phone keyboard)
+  const clean = toLatinDigits(e.target.value).replace(/\D/g, '').slice(0, 4);
+  if (clean !== e.target.value) e.target.value = clean;
+  state.table = clean;
+});
+
 $('drawerFooter').addEventListener('click', (e) => {
-  if (e.target.closest('#checkoutBtn')) showToast(t('checkoutToast'));
+  const typeBtn = e.target.closest('[data-order-type]');
+  if (typeBtn) {
+    state.orderType = typeBtn.getAttribute('data-order-type') === 'takeaway' ? 'takeaway' : 'dine-in';
+    renderCart();
+    return;
+  }
+  if (e.target.closest('#checkoutBtn')) sendOrderOnWhatsApp();
 });
 
 document.addEventListener('keydown', (e) => {
@@ -2450,6 +2557,12 @@ function init() {
   setupLangSwitcherEvents();
 
   restore();
+
+  // Table QR codes open the menu as ?table=7 — pre-fill the table so the customer doesn't have to
+  try {
+    const tableParam = toLatinDigits(new URLSearchParams(window.location.search).get('table') || '').replace(/\D/g, '').slice(0, 4);
+    if (tableParam) { state.table = tableParam; state.orderType = 'dine-in'; }
+  } catch { /* old browsers */ }
   applyTheme(state.theme);
   state.isOpen = computeIsOpenNow();
   applyLocale();
