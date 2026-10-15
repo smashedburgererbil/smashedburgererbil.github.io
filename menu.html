@@ -9,7 +9,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link
-  href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700;800;900&family=Cairo:wght@400;600;700;800&display=swap"
+  href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700;800;900&family=Cairo:wght@400;600;700;800&family=Noto+Sans+Arabic:wght@400;500;600;700;800&display=swap"
   rel="stylesheet"
 />
 
@@ -100,8 +100,20 @@
     display: none !important;
   }
 
-  html[data-locale="ar"] body,
-  html[data-locale="ku"] body { font-family: 'Cairo', 'Noto Naskh Arabic', system-ui, sans-serif; }
+  /* Arabic: Cairo. Kurdish (Sorani): Noto Sans Arabic, which covers ڕ ڵ ێ ۆ ە fully */
+  html[data-locale="ar"] { --rtl-font: 'Cairo', 'Noto Sans Arabic', system-ui, sans-serif; }
+  html[data-locale="ku"] { --rtl-font: 'Noto Sans Arabic', 'Cairo', system-ui, sans-serif; }
+  html[data-locale="ar"] body, html[data-locale="ku"] body,
+  html[data-locale="ar"] input, html[data-locale="ku"] input,
+  html[data-locale="ar"] button, html[data-locale="ku"] button,
+  html[data-locale="ar"] .font-display, html[data-locale="ku"] .font-display,
+  html[data-locale="ar"] .wordmark, html[data-locale="ku"] .wordmark,
+  html[data-locale="ar"] .menu-section-title, html[data-locale="ku"] .menu-section-title {
+    font-family: var(--rtl-font);
+  }
+  html[data-locale="ku"] body { line-height: 1.6; }
+  /* Letter-spacing breaks the joined letters of Arabic script */
+  html[data-locale="ar"] *, html[data-locale="ku"] * { letter-spacing: 0 !important; }
 
   .no-scrollbar::-webkit-scrollbar { display: none; }
   .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
@@ -780,7 +792,7 @@
 const MODIFIER_SETS = {
   burger: [
     { id: 'spice', type: 'single', labelKey: 'spiceLevel', defaultOptionId: 'medium', options: [
-      { id: 'mild',   label: { en: 'Mild',        ar: 'خفيف',       ku: 'نەرم' },         price: 0 },
+      { id: 'mild',   label: { en: 'Mild',        ar: 'خفيف',       ku: 'کەم تیژ' },         price: 0 },
       { id: 'medium', label: { en: 'Medium',      ar: 'متوسط',      ku: 'مامناوەند' },    price: 0 },
       { id: 'hot',    label: { en: 'Hot',         ar: 'حار',        ku: 'تیژ' },          price: 0 },
       { id: 'xhot',   label: { en: 'Extra Hot',   ar: 'حار جداً',   ku: 'زۆر تیژ' },      price: 0 },
@@ -801,7 +813,7 @@ const MODIFIER_SETS = {
     { id: 'addons', type: 'multi', labelKey: 'addons', options: [
       { id: 'cheese',    label: { en: 'Extra Cheese',    ar: 'جبنة إضافية',       ku: 'پەنیری زیادە' },       price: 1000 },
       { id: 'sauce',     label: { en: 'Extra Sauce',     ar: 'صوص إضافي',         ku: 'سۆسی زیادە' },         price: 500  },
-      { id: 'spice-mix', label: { en: 'Extra Spice Mix', ar: 'خلطة حارّة إضافية', ku: 'تێکەڵی تیژی زیادە' }, price: 250  },
+      { id: 'spice-mix', label: { en: 'Extra Spice Mix', ar: 'خلطة حارّة إضافية', ku: 'بەهاراتی زیادە' }, price: 250  },
     ]},
   ],
   drink: [
@@ -816,92 +828,92 @@ const MODIFIER_SETS = {
 
 const MENU = [
   { id:'og-smash-burger', category:'burgers',
-    name:{en:'OG Smash Burger', ar:'أو جي سماش برجر', ku:'ئۆ جی سماش برگر'},
-    desc:{en:'The original double smash with cheese, pickles, onion & house sauce', ar:'البرجر الأصلي المضغوط مع الجبنة، المخلل، البصل وصوص البيت', ku:'برگری ڕەسەنی دوو قات بە پەنیر، خەیارشۆر، پیاز و سۆسی ماڵ'},
+    name:{en:'OG Smash Burger', ar:'أو جي سماش برجر', ku:'ئۆ جی سماش بەرگەر'},
+    desc:{en:'The original double smash with cheese, pickles, onion & house sauce', ar:'البرجر الأصلي المضغوط مع الجبنة، المخلل، البصل وصوص البيت', ku:'بەرگەری ڕەسەنی دوو قات لەگەڵ پەنیر، خەیارشۆر، پیاز و سۆسی هاوس'},
     price:8500, emoji:'🍔', gradient:'from-brand/40 to-zinc-900/30',
     image:'image/Ogsmashburger.png',
     tags:['chef'], modifierSet:'burger', available:true },
 
   { id:'all-american-burger', category:'burgers',
-    name:{en:'All American Burger', ar:'برجر أمريكي كلاسيك', ku:'برگری ئەمریکی کلاسیک'},
-    desc:{en:'Classic beef smash with cheddar, lettuce, tomato & American sauce', ar:'برجر لحم كلاسيكي مع شيدر، خس، طماطم وصوص أمريكي', ku:'برگری گۆشتی کلاسیک بە چێدار، کاهوو، تەماتە و سۆسی ئەمریکی'},
+    name:{en:'All American Burger', ar:'برجر أمريكي كلاسيك', ku:'ئۆڵ ئەمریکان بەرگەر'},
+    desc:{en:'Classic beef smash with cheddar, lettuce, tomato & American sauce', ar:'برجر لحم كلاسيكي مع شيدر، خس، طماطم وصوص أمريكي', ku:'بەرگەری گۆشتی کلاسیک لەگەڵ پەنیری چێدار، کاهوو، تەماتە و سۆسی ئەمریکی'},
     price:8500, emoji:'🇺🇸', gradient:'from-brandDark/40 to-zinc-900/25',
     image:'image/allamericanburger.png',
     tags:[], modifierSet:'burger', available:true },
 
   { id:'jalapeno-burger', category:'burgers',
-    name:{en:'Jalapeño Burger', ar:'برجر هالبينو', ku:'برگری جالاپینۆ'},
-    desc:{en:'Smash patty loaded with jalapeños, pepper jack & spicy mayo', ar:'قطعة مضغوطة مع الهالبينو، جبنة الفلفل ومايونيز حار', ku:'گۆشتی پەستاو لەگەڵ جالاپینۆ، پەنیری بیبەر و مایۆنێزی تیژ'},
+    name:{en:'Jalapeño Burger', ar:'برجر هالبينو', ku:'بەرگەری هالاپینۆ'},
+    desc:{en:'Smash patty loaded with jalapeños, pepper jack & spicy mayo', ar:'قطعة مضغوطة مع الهالبينو، جبنة الفلفل ومايونيز حار', ku:'گۆشتی سماشکراو لەگەڵ هالاپینۆ، پەنیری پێپەر جاک و مایۆنێزی تیژ'},
     price:8500, emoji:'🌶️', gradient:'from-brandDeeper/40 to-zinc-900/25',
     image:'image/jalapenoburger.png',
     tags:['spicy','chef'], modifierSet:'burger', available:true },
 
   { id:'golden-crunch-chicken-burger', category:'burgers',
-    name:{en:'Golden Crunch Chicken Burger', ar:'برجر الدجاج المقرمش الذهبي', ku:'برگری مریشکی کرانچی زێڕین'},
-    desc:{en:'Crispy chicken fillet with signature Golden Crunch sauce & pickles', ar:'فيليه دجاج مقرمش مع صوص القرمشة الذهبية والمخلل', ku:'فیلیەی مریشکی برژاو بە سۆسی کرانچی زێڕین و خەیارشۆر'},
+    name:{en:'Golden Crunch Chicken Burger', ar:'برجر الدجاج المقرمش الذهبي', ku:'بەرگەری مریشکی کرانچی زێڕین'},
+    desc:{en:'Crispy chicken fillet with signature Golden Crunch sauce & pickles', ar:'فيليه دجاج مقرمش مع صوص القرمشة الذهبية والمخلل', ku:'فیلێی مریشکی کرسپی لەگەڵ سۆسی تایبەتی کرانچی زێڕین و خەیارشۆر'},
     price:7500, emoji:'🍔', gradient:'from-brand/35 to-zinc-800/20',
     image:'image/Goldencrunchchickenburger.png',
     tags:['chef','new'], modifierSet:'burger', available:true },
 
   { id:'hot-chicken-burger', category:'burgers',
-    name:{en:'Hot Chicken Burger', ar:'برجر الدجاج الحار', ku:'برگری مریشکی تیژ'},
-    desc:{en:'Crispy chicken, lettuce, cheese, tomato with hot spice blend', ar:'دجاج مقرمش، خس، جبنة، طماطم مع خلطة التوابل الحارّة', ku:'مریشکی برژاو، کاهوو، پەنیر، تەماتە لەگەڵ تێکەڵی تواوی تیژ'},
+    name:{en:'Hot Chicken Burger', ar:'برجر الدجاج الحار', ku:'بەرگەری مریشکی تیژ'},
+    desc:{en:'Crispy chicken, lettuce, cheese, tomato with hot spice blend', ar:'دجاج مقرمش، خس، جبنة، طماطم مع خلطة التوابل الحارّة', ku:'مریشکی کرسپی، کاهوو، پەنیر و تەماتە لەگەڵ تێکەڵەی بەهاراتی تیژ'},
     price:7500, emoji:'🔥', gradient:'from-brand/35 to-zinc-900/25',
     image:'image/Hotchickenburger.png',
     tags:['spicy'], modifierSet:'burger', available:true },
 
   { id:'sweet-heat-chicken-burger', category:'burgers',
-    name:{en:'Sweet Heat Chicken Burger', ar:'برجر الدجاج الحلو الحار', ku:'برگری مریشکی شیرین و تیژ'},
-    desc:{en:'Crispy chicken glazed in sweet-heat sauce with lettuce, cheese & tomato', ar:'دجاج مقرمش بصوص حلو حار مع خس، جبنة وطماطم', ku:'مریشکی برژاو بە سۆسی شیرین و تیژ لەگەڵ کاهوو، پەنیر و تەماتە'},
+    name:{en:'Sweet Heat Chicken Burger', ar:'برجر الدجاج الحلو الحار', ku:'بەرگەری مریشکی شیرین و تیژ'},
+    desc:{en:'Crispy chicken glazed in sweet-heat sauce with lettuce, cheese & tomato', ar:'دجاج مقرمش بصوص حلو حار مع خس، جبنة وطماطم', ku:'مریشکی کرسپی بە سۆسی شیرین و تیژ، لەگەڵ کاهوو، پەنیر و تەماتە'},
     price:7500, emoji:'🍔', gradient:'from-brandDark/35 to-zinc-800/20',
     image:'image/Sweetheatchickenburger.png',
     tags:['new'], modifierSet:'burger', available:true },
 
   { id:'crispy-chicken-tenders', category:'sides',
-    name:{en:'Crispy Chicken Tenders', ar:'أصابع الدجاج المقرمشة', ku:'پارچە مریشکی برژاو'},
-    desc:{en:'Crispy tenders with special spice', ar:'قطع دجاج مقرمشة بتوابل خاصة', ku:'پارچەی مریشکی برژاو بە تواوی تایبەت'},
+    name:{en:'Crispy Chicken Tenders', ar:'أصابع الدجاج المقرمشة', ku:'تێندەری مریشکی کرسپی'},
+    desc:{en:'Crispy tenders with special spice', ar:'قطع دجاج مقرمشة بتوابل خاصة', ku:'پارچە مریشکی کرسپی بە بەهاراتی تایبەت'},
     price:8000, emoji:'🍗', gradient:'from-zinc-500/30 to-zinc-800/20',
     image:'image/Crispychickentenders.png',
     tags:['chef'], modifierSet:'side', available:true },
 
   { id:'dynamite-shrimp', category:'sides',
-    name:{en:'Dynamite Shrimps', ar:'روبيان ديناميت', ku:'قڕژاڵی دینامیت'},
-    desc:{en:'Dynamite shrimp with special sauce', ar:'روبيان ديناميت مع صوص خاص', ku:'قڕژاڵی دینامیت بە سۆسی تایبەت'},
+    name:{en:'Dynamite Shrimps', ar:'روبيان ديناميت', ku:'میگووی داینامایت'},
+    desc:{en:'Dynamite shrimp with special sauce', ar:'روبيان ديناميت مع صوص خاص', ku:'میگووی داینامایت لەگەڵ سۆسی تایبەت'},
     price:9500, emoji:'🍤', gradient:'from-brand/30 to-zinc-900/20',
     image:'image/Dynamiteshrimps.png',
     tags:['spicy','chef'], modifierSet:'side', available:true },
 
   { id:'jalapeno-poppers', category:'sides',
-    name:{en:'Jalapeño Poppers', ar:'فلفل هالبينو محشي', ku:'بیبەری جالاپینۆی پڕکراو'},
-    desc:{en:'Crispy jalapeño poppers with a cheese filling', ar:'فلفل هالبينو مقرمش محشي بالجبنة', ku:'بیبەری جالاپینۆی برژاو بە پڕکردنەوەی پەنیر'},
+    name:{en:'Jalapeño Poppers', ar:'فلفل هالبينو محشي', ku:'هالاپینۆ پۆپەرز'},
+    desc:{en:'Crispy jalapeño poppers with a cheese filling', ar:'فلفل هالبينو مقرمش محشي بالجبنة', ku:'هالاپینۆی کرسپی پڕکراو بە پەنیر'},
     price:6500, emoji:'🌶️', gradient:'from-zinc-400/25 to-zinc-800/15',
     image:'image/jalapenopoppers.png',
     tags:['spicy'], modifierSet:'side', available:true },
 
   { id:'chicken-popcorn', category:'sides',
     name:{en:'Chicken Popcorn', ar:'بوب كورن الدجاج', ku:'پۆپکۆرنی مریشک'},
-    desc:{en:'Chicken popcorn with spice', ar:'قطع دجاج صغيرة متبلة', ku:'پارچەی بچووکی مریشکی تواوە'},
+    desc:{en:'Chicken popcorn with spice', ar:'قطع دجاج صغيرة متبلة', ku:'پارچە بچووکی مریشکی کرسپی بە بەهارات'},
     price:5500, emoji:'🍿', gradient:'from-zinc-500/25 to-zinc-700/15',
     image:'image/chickenpopcorn.png',
     tags:[], modifierSet:'side', available:true },
 
   { id:'loaded-fries', category:'sides',
-    name:{en:'Loaded Fries', ar:'بطاطا محملة', ku:'پەتاتەی پڕکراو'},
-    desc:{en:'Loaded fries with salt and pepper', ar:'بطاطا محملة بالملح والفلفل', ku:'پەتاتەی پڕکراو بە خوێ و بیبەر'},
+    name:{en:'Loaded Fries', ar:'بطاطا محملة', ku:'پەتاتەی لۆدید'},
+    desc:{en:'Loaded fries with salt and pepper', ar:'بطاطا محملة بالملح والفلفل', ku:'پەتاتەی سوورکراو لەگەڵ خوێ و بیبەر'},
     price:7000, emoji:'🍟', gradient:'from-brandDark/30 to-zinc-900/20',
     image:'image/loadedfries.png',
     tags:['chef'], modifierSet:'side', available:true },
 
   { id:'classic-fries', category:'sides',
-    name:{en:'Classic Fries', ar:'بطاطا كلاسيك', ku:'پەتاتەی کلاسیک'},
-    desc:{en:'1 Plate', ar:'طبق واحد', ku:'یەک بەتەمەن'},
+    name:{en:'Classic Fries', ar:'بطاطا كلاسيك', ku:'پەتاتەی سوورکراوی کلاسیک'},
+    desc:{en:'1 Plate', ar:'طبق واحد', ku:'یەک قاپ'},
     price:3000, emoji:'🥔', gradient:'from-zinc-400/20 to-zinc-700/15',
     image:'image/classicfries.png',
     tags:[], modifierSet:'side', available:true },
 
   { id:'curly-fries', category:'sides',
-    name:{en:'Curly Fries', ar:'بطاطا حلزونية', ku:'پەتاتەی سوڕاوە'},
-    desc:{en:'1 Plate', ar:'طبق واحد', ku:'یەک بەتەمەن'},
+    name:{en:'Curly Fries', ar:'بطاطا حلزونية', ku:'پەتاتەی کێرلی'},
+    desc:{en:'1 Plate', ar:'طبق واحد', ku:'یەک قاپ'},
     price:3500, emoji:'🍟', gradient:'from-brand/25 to-zinc-800/15',
     image:'image/curlyfries.png',
     tags:[], modifierSet:'side', available:true },
@@ -914,14 +926,14 @@ const MENU = [
     tags:['spicy'], modifierSet:'none', available:true },
 
   { id:'dynamite-sauce', category:'sauces',
-    name:{en:'Dynamite Sauce', ar:'صوص ديناميت', ku:'سۆسی دینامیت'},
+    name:{en:'Dynamite Sauce', ar:'صوص ديناميت', ku:'سۆسی داینامایت'},
     desc:{en:'Per cup', ar:'لكل كوب', ku:'بۆ هەر کوپێک'},
     price:1500, emoji:'🥫', gradient:'from-brand/30 to-zinc-800/20',
     image:'image/dynamite.PNG',
     tags:['spicy'], modifierSet:'none', available:true },
 
   { id:'house-sauce', category:'sauces',
-    name:{en:'House Sauce', ar:'صوص البيت', ku:'سۆسی ماڵ'},
+    name:{en:'House Sauce', ar:'صوص البيت', ku:'سۆسی هاوس'},
     desc:{en:'Per cup', ar:'لكل كوب', ku:'بۆ هەر کوپێک'},
     price:1500, emoji:'🥫', gradient:'from-zinc-500/25 to-zinc-800/15',
     image:'image/House.PNG',
@@ -942,7 +954,7 @@ const MENU = [
     tags:[], modifierSet:'none', available:true },
 
   { id:'honey-mustard', category:'sauces',
-    name:{en:'Honey Mustard', ar:'عسل وخردل', ku:'هەنگوین و خەردەل'},
+    name:{en:'Honey Mustard', ar:'عسل وخردل', ku:'سۆسی هەنگوین و خەردەل'},
     desc:{en:'Per cup', ar:'لكل كوب', ku:'بۆ هەر کوپێک'},
     price:1500, emoji:'🍯', gradient:'from-zinc-400/25 to-zinc-700/15',
     image:'image/honeymustard.PNG',
@@ -956,21 +968,21 @@ const MENU = [
     tags:[], modifierSet:'none', available:true },
 
   { id:'hot-honey-ranch', category:'sauces',
-    name:{en:'Hot Honey Ranch', ar:'رانش بالعسل الحار', ku:'ڕانچی هەنگوینی تیژ'},
+    name:{en:'Hot Honey Ranch', ar:'رانش بالعسل الحار', ku:'سۆسی ڕانچی هەنگوینی تیژ'},
     desc:{en:'Per cup', ar:'لكل كوب', ku:'بۆ هەر کوپێک'},
     price:1500, emoji:'🔥', gradient:'from-brand/30 to-zinc-900/20',
     image:'image/hothoney.PNG',
     tags:['spicy','new'], modifierSet:'none', available:true },
 
   { id:'pepsi', category:'drinks',
-    name:{en:'Pepsi', ar:'بيبسي', ku:'پیپسی'},
+    name:{en:'Pepsi', ar:'بيبسي', ku:'پێپسی'},
     desc:{en:'Chilled can', ar:'علبة مبردة', ku:'قوتووی سارد'},
     price:1500, emoji:'🥤', gradient:'from-zinc-500/25 to-zinc-800/15',
     image:'image/pepsi.PNG',
     tags:[], modifierSet:'drink', available:true },
 
   { id:'diet-pepsi', category:'drinks',
-    name:{en:'Diet Pepsi', ar:'بيبسي دايت', ku:'پیپسی دایەت'},
+    name:{en:'Diet Pepsi', ar:'بيبسي دايت', ku:'پێپسی دایت'},
     desc:{en:'Chilled can', ar:'علبة مبردة', ku:'قوتووی سارد'},
     price:1500, emoji:'🥤', gradient:'from-zinc-400/20 to-zinc-700/15',
     image:'image/dietpepsi.PNG',
@@ -1130,43 +1142,43 @@ const I18N = {
   },
   ku: {
     htmlLang:'ckb', dir:'rtl', shortLabel:'ک', nativeName:'کوردی',
-    brand:'سماشد برگر', tagline:'برگر و زیاتر', restaurant:'چێشتخانە',
-    searchPlaceholder:'گەڕان بۆ برگر، لاوەکی، سۆس…', clearSearch:'سڕینەوەی گەڕان',
-    catAll:'هەموو', catBurgers:'برگرەکان', catSides:'لاوەکییەکان', catSauces:'سۆسەکان', catDrinks:'خواردنەوەکان',
-    customize:'تایبەتکردن', addToCart:'زیادکردن', addToCartWithPrice:'زیادکردن بۆ سەبەتە',
-    tagSpicy:'تیژ', tagChef:'هەڵبژاردەی شێف', tagVegan:'ڕووەکی', tagNew:'نوێ',
-    noResults:'هیچ شتێکی هاوتا نەدۆزرایەوە', noResultsHint:'گەڕان یان پۆلێکی تر تاقی بکەرەوە.',
-    spiceLevel:'ئاستی تیژی', addons:'زیادەکان', remove:'لابردن', ice:'سەهۆڵ', required:'پێویست',
-    quantity:'بڕ', cartTitle:'داواکاریت',
-    cartEmpty:'سەبەتەکەت بەتاڵە', cartEmptyHint:'شتێکی خۆش لە لیستەکە زیاد بکە.',
-    browseMenu:'بینینی لیستە', clearCart:'سڕینەوە', checkout:'پارەدان',
-    subtotal:'کۆی لاوەکی', total:'کۆی گشتی',
-    deliveryNote:'گەیاندن و باج لە کاتی پارەدان هەژمار دەکرێن.',
+    brand:'سماشد بەرگەر', tagline:'بەرگەر و زیاتر', restaurant:'چێشتخانە',
+    searchPlaceholder:'گەڕان بۆ بەرگەر، لاوەکی، سۆس…', clearSearch:'سڕینەوەی گەڕان',
+    catAll:'هەموو', catBurgers:'بەرگەر', catSides:'لاوەکی', catSauces:'سۆس', catDrinks:'خواردنەوە',
+    customize:'گۆڕانکاری', addToCart:'زیادکردن', addToCartWithPrice:'زیادکردن بۆ سەبەتە',
+    tagSpicy:'تیژ', tagChef:'پێشنیاری شێف', tagVegan:'ڕووەکی', tagNew:'نوێ',
+    noResults:'هیچ ئەنجامێک نەدۆزرایەوە', noResultsHint:'وشەیەکی تر یان بەشێکی تر تاقی بکەرەوە.',
+    spiceLevel:'ئاستی تیژی', addons:'زیادکردنەکان', remove:'لابردن', ice:'سەهۆڵ', required:'پێویستە',
+    quantity:'ژمارە', cartTitle:'داواکارییەکەت',
+    cartEmpty:'سەبەتەکەت بەتاڵە', cartEmptyHint:'شتێکی بەتام لە مینیوەکە زیاد بکە.',
+    browseMenu:'بینینی مینیو', clearCart:'سڕینەوە', checkout:'تەواوکردنی داواکاری',
+    subtotal:'کۆی سەرەتایی', total:'کۆی گشتی',
+    deliveryNote:'نرخی گەیاندن و باج لە کاتی تەواوکردنی داواکاریدا حیساب دەکرێن.',
     viewCart:'بینینی سەبەتە',
-    openMenu:'لیستە',
-    addedToast:'زیادکرا بۆ سەبەتە', clearedToast:'سەبەتە سڕایەوە', removedToast:'لە سەبەتە لابردرا',
-    checkoutToast:'پارەدان لە وەشانی بەرهەمهێناندا هەیە (ڕێچکە B).',
-    menuTitle:'لیستەکەمان', menuSubtitle:'تازە، سماشد، و بەپێی داواکاری ئامادە دەکرێت.',
-    decrease:'کەمکردنەوەی بڕ', increase:'زیادکردنی بڕ', removeLine:'لابردنی بڕگە',
+    openMenu:'مینیو',
+    addedToast:'زیادکرا بۆ سەبەتە', clearedToast:'سەبەتەکە بەتاڵ کرایەوە', removedToast:'لە سەبەتەکە لابرا',
+    checkoutToast:'تەواوکردنی داواکاری بەم زووانە بەردەست دەبێت.',
+    menuTitle:'مینیوەکەمان', menuSubtitle:'تازە، سماشکراو، و بەپێی داواکاری ئامادە دەکرێت.',
+    decrease:'کەمکردنەوەی ژمارە', increase:'زیادکردنی ژمارە', removeLine:'لابردنی خواردن',
     themeToDark:'گۆڕین بۆ دۆخی تاریک', themeToLight:'گۆڕین بۆ دۆخی ڕووناک',
-    footerTagline:'سماشد. برژاو. زێڕین. هەموو جارێک تازە ئامادە دەکرێت.',
-    infoTitle:'سماشد. برژاو. زێڕین.',
-    infoText:'سوپاس بۆ سەردانەکەتان. هەموو برگرێک تازە لە کاتی داواکاری پەستان دەکرێت — گەرم، شێدار، و پڕ لەو کرانچی زێڕینە.',
+    footerTagline:'سماشکراو. کرسپی. زێڕین. هەموو جارێک تازە ئامادە دەکرێت.',
+    infoTitle:'سماشکراو. کرسپی. زێڕین.',
+    infoText:'سوپاس بۆ سەردانەکەتان. هەموو بەرگەرێک هەر لە کاتی داواکردندا تازە ئامادە دەکرێت — گەرم، ئاودار، و پڕ لەو کرانچییە زێڕینە.',
     contactTitle:'پەیوەندی',
     openingHours:'کاتژمێری کارکردن',
     weeklySchedule:'خشتەی هەفتانە',
     openNow:'ئێستا کراوەیە',
     closedNow:'داخراوە',
     openDaily:'ڕۆژانە کراوەیە',
-    hoursNote:'کاتەکان بە کاتی خۆجێیی بەغدا نیشان دراون.',
-    addressLine1:'شەقامی گوڵان، بولێوارد',
+    hoursNote:'کاتەکان بە کاتی بەغدا نیشان دراون.',
+    addressLine1:'شەقامی گوڵان، بۆلیڤارد',
     addressLine2:'هەولێر، پارێزگای هەولێر، 44001، عێراق',
     whatsappCta:'واتساپ',
-    callCta:'پەیوەندی',
+    callCta:'پەیوەندیکردن',
     chatCta:'چات',
-    directionsCta:'ئاراستە',
+    directionsCta:'نەخشە',
     rights:'هەموو مافەکان پارێزراون.',
-    poweredBy:'پشتگیری لەلایەن',
+    poweredBy:'دروستکراوە لەلایەن',
   },
 };
 
