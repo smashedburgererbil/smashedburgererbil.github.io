@@ -470,30 +470,30 @@
 <header class="sticky top-0 z-40 border-b border-edge/5 bg-base/85 backdrop-blur-xl">
   <div class="mx-auto max-w-6xl px-4">
 
-    <div class="flex h-16 items-center gap-3">
+    <div class="flex h-16 items-center gap-2 sm:gap-3">
       <button id="homeBtn" type="button" aria-label="Home"
         class="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-surface ring-1 ring-edge/5 transition hover:ring-brand/40">
         <i data-lucide="chevron-left" class="h-5 w-5 rtl-flip"></i>
       </button>
 
-      <div class="flex min-w-0 items-center">
+      <div class="flex min-w-0 flex-1 items-center">
         <img
           src="image/lightsidelogo.png"
           alt="Smashed Burger"
-          class="header-logo-light h-11 w-auto max-w-[55vw] select-none sm:h-12"
+          class="header-logo-light h-auto max-h-11 w-auto max-w-full select-none sm:max-h-12"
           draggable="false"
           decoding="async"
         />
         <img
           src="image/darksidelogo.png"
           alt="Smashed Burger"
-          class="header-logo-dark h-11 w-auto max-w-[55vw] select-none sm:h-12"
+          class="header-logo-dark h-auto max-h-11 w-auto max-w-full select-none sm:max-h-12"
           draggable="false"
           decoding="async"
         />
       </div>
 
-      <div class="ms-auto flex items-center gap-2">
+      <div class="ms-auto flex shrink-0 items-center gap-2">
         <div id="langSwitcher" class="relative"></div>
 
         <button id="themeToggle" type="button"
@@ -1612,12 +1612,20 @@ function renderLangSwitcher() {
       );
     }).join('');
 
+    // Header uses a compact trigger (globe + short code); the intro screen keeps the full name
+    const triggerHtml = isIntro
+      ? '<button type="button" class="lang-trigger flex h-10 items-center gap-2 rounded-xl ps-1.5 pe-3 ring-1 transition hover:ring-brand/40 ' + triggerBg + '" aria-haspopup="listbox" aria-expanded="false" aria-label="Language">' +
+          '<span class="grid h-7 w-7 place-items-center rounded-lg bg-brand/10 text-brand">' + GLOBE_SVG + '</span>' +
+          '<span class="text-xs font-bold text-ink">' + esc(I18N[current].nativeName) + '</span>' +
+          CHEVRON_SVG +
+        '</button>'
+      : '<button type="button" class="lang-trigger flex h-10 items-center gap-1 rounded-xl px-2 ring-1 transition hover:ring-brand/40 ' + triggerBg + '" aria-haspopup="listbox" aria-expanded="false" aria-label="Language">' +
+          '<span class="text-brand">' + GLOBE_SVG + '</span>' +
+          '<span class="text-xs font-bold text-ink">' + esc(I18N[current].shortLabel) + '</span>' +
+        '</button>';
+
     container.innerHTML =
-      '<button type="button" class="lang-trigger flex h-10 items-center gap-2 rounded-xl ps-1.5 pe-3 ring-1 transition hover:ring-brand/40 ' + triggerBg + '" aria-haspopup="listbox" aria-expanded="false" aria-label="Language">' +
-        '<span class="grid h-7 w-7 place-items-center rounded-lg bg-brand/10 text-brand">' + GLOBE_SVG + '</span>' +
-        '<span class="text-xs font-bold text-ink">' + esc(I18N[current].nativeName) + '</span>' +
-        CHEVRON_SVG +
-      '</button>' +
+      triggerHtml +
       '<div class="lang-menu absolute end-0 top-full z-50 mt-2 hidden w-52 flex-col gap-0.5 rounded-2xl bg-surface p-1.5 shadow-2xl ring-1 ring-edge/10" role="listbox">' +
         itemsHtml +
       '</div>';
