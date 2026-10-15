@@ -5,6 +5,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
 <meta name="theme-color" content="#F5F2EC" id="themeColorMeta" />
 <title>Smashed Burger — Digital Menu</title>
+<link rel="icon" type="image/png" sizes="32x32" href="image/favicon-32.png" />
+<link rel="icon" type="image/png" sizes="192x192" href="image/favicon-192.png" />
+<link rel="apple-touch-icon" href="image/apple-touch-icon.png" />
 
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -428,7 +431,7 @@
 
     <div class="animate-riseIn">
       <img
-        src="image/logodark-removebg-preview.png"
+        src="image/logodark-removebg-preview.webp"
         alt="Smashed Burger"
         class="h-48 w-auto max-w-[85vw] select-none drop-shadow-2xl sm:h-60 md:h-72"
         draggable="false"
@@ -490,14 +493,14 @@
 
       <div class="flex min-w-0 flex-1 items-center">
         <img
-          src="image/lightsidelogo.png"
+          src="image/lightsidelogo.webp"
           alt="Smashed Burger"
           class="header-logo-light h-auto max-h-11 w-auto max-w-full select-none sm:max-h-12"
           draggable="false"
           decoding="async"
         />
         <img
-          src="image/darksidelogo.png"
+          src="image/darksidelogo.webp"
           alt="Smashed Burger"
           class="header-logo-dark h-auto max-h-11 w-auto max-w-full select-none sm:max-h-12"
           draggable="false"
@@ -831,175 +834,175 @@ const MENU = [
     name:{en:'OG Smash Burger', ar:'أو جي سماش برجر', ku:'ئۆ جی سماش بەرگەر'},
     desc:{en:'The original double smash with cheese, pickles, onion & house sauce', ar:'البرجر الأصلي المضغوط مع الجبنة، المخلل، البصل وصوص البيت', ku:'بەرگەری ڕەسەنی دوو قات لەگەڵ پەنیر، خەیارشۆر، پیاز و سۆسی هاوس'},
     price:8500, emoji:'🍔', gradient:'from-brand/40 to-zinc-900/30',
-    image:'image/Ogsmashburger.png',
+    image:'image/Ogsmashburger.webp',
     tags:['chef'], modifierSet:'burger', available:true },
 
   { id:'all-american-burger', category:'burgers',
     name:{en:'All American Burger', ar:'برجر أمريكي كلاسيك', ku:'ئۆڵ ئەمریکان بەرگەر'},
     desc:{en:'Classic beef smash with cheddar, lettuce, tomato & American sauce', ar:'برجر لحم كلاسيكي مع شيدر، خس، طماطم وصوص أمريكي', ku:'بەرگەری گۆشتی کلاسیک لەگەڵ پەنیری چێدار، کاهوو، تەماتە و سۆسی ئەمریکی'},
     price:8500, emoji:'🇺🇸', gradient:'from-brandDark/40 to-zinc-900/25',
-    image:'image/allamericanburger.png',
+    image:'image/allamericanburger.webp',
     tags:[], modifierSet:'burger', available:true },
 
   { id:'jalapeno-burger', category:'burgers',
     name:{en:'Jalapeño Burger', ar:'برجر هالبينو', ku:'بەرگەری هالاپینۆ'},
     desc:{en:'Smash patty loaded with jalapeños, pepper jack & spicy mayo', ar:'قطعة مضغوطة مع الهالبينو، جبنة الفلفل ومايونيز حار', ku:'گۆشتی سماشکراو لەگەڵ هالاپینۆ، پەنیری پێپەر جاک و مایۆنێزی تیژ'},
     price:8500, emoji:'🌶️', gradient:'from-brandDeeper/40 to-zinc-900/25',
-    image:'image/jalapenoburger.png',
+    image:'image/jalapenoburger.webp',
     tags:['spicy','chef'], modifierSet:'burger', available:true },
 
   { id:'golden-crunch-chicken-burger', category:'burgers',
     name:{en:'Golden Crunch Chicken Burger', ar:'برجر الدجاج المقرمش الذهبي', ku:'بەرگەری مریشکی کرانچی زێڕین'},
     desc:{en:'Crispy chicken fillet with signature Golden Crunch sauce & pickles', ar:'فيليه دجاج مقرمش مع صوص القرمشة الذهبية والمخلل', ku:'فیلێی مریشکی کرسپی لەگەڵ سۆسی تایبەتی کرانچی زێڕین و خەیارشۆر'},
     price:7500, emoji:'🍔', gradient:'from-brand/35 to-zinc-800/20',
-    image:'image/Goldencrunchchickenburger.png',
+    image:'image/Goldencrunchchickenburger.webp',
     tags:['chef','new'], modifierSet:'burger', available:true },
 
   { id:'hot-chicken-burger', category:'burgers',
     name:{en:'Hot Chicken Burger', ar:'برجر الدجاج الحار', ku:'بەرگەری مریشکی تیژ'},
     desc:{en:'Crispy chicken, lettuce, cheese, tomato with hot spice blend', ar:'دجاج مقرمش، خس، جبنة، طماطم مع خلطة التوابل الحارّة', ku:'مریشکی کرسپی، کاهوو، پەنیر و تەماتە لەگەڵ تێکەڵەی بەهاراتی تیژ'},
     price:7500, emoji:'🔥', gradient:'from-brand/35 to-zinc-900/25',
-    image:'image/Hotchickenburger.png',
+    image:'image/Hotchickenburger.webp',
     tags:['spicy'], modifierSet:'burger', available:true },
 
   { id:'sweet-heat-chicken-burger', category:'burgers',
     name:{en:'Sweet Heat Chicken Burger', ar:'برجر الدجاج الحلو الحار', ku:'بەرگەری مریشکی شیرین و تیژ'},
     desc:{en:'Crispy chicken glazed in sweet-heat sauce with lettuce, cheese & tomato', ar:'دجاج مقرمش بصوص حلو حار مع خس، جبنة وطماطم', ku:'مریشکی کرسپی بە سۆسی شیرین و تیژ، لەگەڵ کاهوو، پەنیر و تەماتە'},
     price:7500, emoji:'🍔', gradient:'from-brandDark/35 to-zinc-800/20',
-    image:'image/Sweetheatchickenburger.png',
+    image:'image/Sweetheatchickenburger.webp',
     tags:['new'], modifierSet:'burger', available:true },
 
   { id:'crispy-chicken-tenders', category:'sides',
     name:{en:'Crispy Chicken Tenders', ar:'أصابع الدجاج المقرمشة', ku:'تێندەری مریشکی کرسپی'},
     desc:{en:'Crispy tenders with special spice', ar:'قطع دجاج مقرمشة بتوابل خاصة', ku:'پارچە مریشکی کرسپی بە بەهاراتی تایبەت'},
     price:8000, emoji:'🍗', gradient:'from-zinc-500/30 to-zinc-800/20',
-    image:'image/Crispychickentenders.png',
+    image:'image/Crispychickentenders.webp',
     tags:['chef'], modifierSet:'side', available:true },
 
   { id:'dynamite-shrimp', category:'sides',
     name:{en:'Dynamite Shrimps', ar:'روبيان ديناميت', ku:'میگووی داینامایت'},
     desc:{en:'Dynamite shrimp with special sauce', ar:'روبيان ديناميت مع صوص خاص', ku:'میگووی داینامایت لەگەڵ سۆسی تایبەت'},
     price:9500, emoji:'🍤', gradient:'from-brand/30 to-zinc-900/20',
-    image:'image/Dynamiteshrimps.png',
+    image:'image/Dynamiteshrimps.webp',
     tags:['spicy','chef'], modifierSet:'side', available:true },
 
   { id:'jalapeno-poppers', category:'sides',
     name:{en:'Jalapeño Poppers', ar:'فلفل هالبينو محشي', ku:'هالاپینۆ پۆپەرز'},
     desc:{en:'Crispy jalapeño poppers with a cheese filling', ar:'فلفل هالبينو مقرمش محشي بالجبنة', ku:'هالاپینۆی کرسپی پڕکراو بە پەنیر'},
     price:6500, emoji:'🌶️', gradient:'from-zinc-400/25 to-zinc-800/15',
-    image:'image/jalapenopoppers.png',
+    image:'image/jalapenopoppers.webp',
     tags:['spicy'], modifierSet:'side', available:true },
 
   { id:'chicken-popcorn', category:'sides',
     name:{en:'Chicken Popcorn', ar:'بوب كورن الدجاج', ku:'پۆپکۆرنی مریشک'},
     desc:{en:'Chicken popcorn with spice', ar:'قطع دجاج صغيرة متبلة', ku:'پارچە بچووکی مریشکی کرسپی بە بەهارات'},
     price:5500, emoji:'🍿', gradient:'from-zinc-500/25 to-zinc-700/15',
-    image:'image/chickenpopcorn.png',
+    image:'image/chickenpopcorn.webp',
     tags:[], modifierSet:'side', available:true },
 
   { id:'loaded-fries', category:'sides',
     name:{en:'Loaded Fries', ar:'بطاطا محملة', ku:'پەتاتەی لۆدید'},
     desc:{en:'Loaded fries with salt and pepper', ar:'بطاطا محملة بالملح والفلفل', ku:'پەتاتەی سوورکراو لەگەڵ خوێ و بیبەر'},
     price:7000, emoji:'🍟', gradient:'from-brandDark/30 to-zinc-900/20',
-    image:'image/loadedfries.png',
+    image:'image/loadedfries.webp',
     tags:['chef'], modifierSet:'side', available:true },
 
   { id:'classic-fries', category:'sides',
     name:{en:'Classic Fries', ar:'بطاطا كلاسيك', ku:'پەتاتەی سوورکراوی کلاسیک'},
     desc:{en:'1 Plate', ar:'طبق واحد', ku:'یەک قاپ'},
     price:3000, emoji:'🥔', gradient:'from-zinc-400/20 to-zinc-700/15',
-    image:'image/classicfries.png',
+    image:'image/classicfries.webp',
     tags:[], modifierSet:'side', available:true },
 
   { id:'curly-fries', category:'sides',
     name:{en:'Curly Fries', ar:'بطاطا حلزونية', ku:'پەتاتەی کێرلی'},
     desc:{en:'1 Plate', ar:'طبق واحد', ku:'یەک قاپ'},
     price:3500, emoji:'🍟', gradient:'from-brand/25 to-zinc-800/15',
-    image:'image/curlyfries.png',
+    image:'image/curlyfries.webp',
     tags:[], modifierSet:'side', available:true },
 
   { id:'spicy-sauce', category:'sauces',
     name:{en:'Spicy Sauce', ar:'صوص حار', ku:'سۆسی تیژ'},
     desc:{en:'Per cup', ar:'لكل كوب', ku:'بۆ هەر کوپێک'},
     price:1500, emoji:'🌶️', gradient:'from-brandDeeper/35 to-zinc-900/25',
-    image:'image/Spicy.PNG',
+    image:'image/Spicy.webp',
     tags:['spicy'], modifierSet:'none', available:true },
 
   { id:'dynamite-sauce', category:'sauces',
     name:{en:'Dynamite Sauce', ar:'صوص ديناميت', ku:'سۆسی داینامایت'},
     desc:{en:'Per cup', ar:'لكل كوب', ku:'بۆ هەر کوپێک'},
     price:1500, emoji:'🥫', gradient:'from-brand/30 to-zinc-800/20',
-    image:'image/dynamite.PNG',
+    image:'image/dynamite.webp',
     tags:['spicy'], modifierSet:'none', available:true },
 
   { id:'house-sauce', category:'sauces',
     name:{en:'House Sauce', ar:'صوص البيت', ku:'سۆسی هاوس'},
     desc:{en:'Per cup', ar:'لكل كوب', ku:'بۆ هەر کوپێک'},
     price:1500, emoji:'🥫', gradient:'from-zinc-500/25 to-zinc-800/15',
-    image:'image/House.PNG',
+    image:'image/House.webp',
     tags:[], modifierSet:'none', available:true },
 
   { id:'golden-crunch-sauce', category:'sauces',
     name:{en:'Golden Crunch Sauce', ar:'صوص القرمشة الذهبية', ku:'سۆسی کرانچی زێڕین'},
     desc:{en:'Signature sauce · per cup', ar:'الصوص المميز · لكل كوب', ku:'سۆسی تایبەت · بۆ هەر کوپێک'},
     price:1500, emoji:'✨', gradient:'from-brand/30 to-zinc-800/15',
-    image:'image/goldencrunch.PNG',
+    image:'image/goldencrunch.webp',
     tags:['chef'], modifierSet:'none', available:true },
 
   { id:'bbq-sauce', category:'sauces',
     name:{en:'BBQ Sauce', ar:'صوص باربكيو', ku:'سۆسی باربیکیو'},
     desc:{en:'Per cup', ar:'لكل كوب', ku:'بۆ هەر کوپێک'},
     price:1500, emoji:'🥫', gradient:'from-brandDeeper/30 to-zinc-900/20',
-    image:'image/BBQ.PNG',
+    image:'image/BBQ.webp',
     tags:[], modifierSet:'none', available:true },
 
   { id:'honey-mustard', category:'sauces',
     name:{en:'Honey Mustard', ar:'عسل وخردل', ku:'سۆسی هەنگوین و خەردەل'},
     desc:{en:'Per cup', ar:'لكل كوب', ku:'بۆ هەر کوپێک'},
     price:1500, emoji:'🍯', gradient:'from-zinc-400/25 to-zinc-700/15',
-    image:'image/honeymustard.PNG',
+    image:'image/honeymustard.webp',
     tags:[], modifierSet:'none', available:true },
 
   { id:'mayonnaise', category:'sauces',
     name:{en:'Mayonnaise', ar:'مايونيز', ku:'مایۆنێز'},
     desc:{en:'Per cup', ar:'لكل كوب', ku:'بۆ هەر کوپێک'},
     price:1000, emoji:'🥚', gradient:'from-zinc-300/20 to-zinc-600/10',
-    image:'image/mayonnaise.PNG',
+    image:'image/mayonnaise.webp',
     tags:[], modifierSet:'none', available:true },
 
   { id:'hot-honey-ranch', category:'sauces',
     name:{en:'Hot Honey Ranch', ar:'رانش بالعسل الحار', ku:'سۆسی ڕانچی هەنگوینی تیژ'},
     desc:{en:'Per cup', ar:'لكل كوب', ku:'بۆ هەر کوپێک'},
     price:1500, emoji:'🔥', gradient:'from-brand/30 to-zinc-900/20',
-    image:'image/hothoney.PNG',
+    image:'image/hothoney.webp',
     tags:['spicy','new'], modifierSet:'none', available:true },
 
   { id:'pepsi', category:'drinks',
     name:{en:'Pepsi', ar:'بيبسي', ku:'پێپسی'},
     desc:{en:'Chilled can', ar:'علبة مبردة', ku:'قوتووی سارد'},
     price:1500, emoji:'🥤', gradient:'from-zinc-500/25 to-zinc-800/15',
-    image:'image/pepsi.PNG',
+    image:'image/pepsi.webp',
     tags:[], modifierSet:'drink', available:true },
 
   { id:'diet-pepsi', category:'drinks',
     name:{en:'Diet Pepsi', ar:'بيبسي دايت', ku:'پێپسی دایت'},
     desc:{en:'Chilled can', ar:'علبة مبردة', ku:'قوتووی سارد'},
     price:1500, emoji:'🥤', gradient:'from-zinc-400/20 to-zinc-700/15',
-    image:'image/dietpepsi.PNG',
+    image:'image/dietpepsi.webp',
     tags:[], modifierSet:'drink', available:true },
 
   { id:'mirinda-orange', category:'drinks',
     name:{en:'Mirinda Orange', ar:'ميرندا برتقال', ku:'میرندا پرتەقاڵ'},
     desc:{en:'Chilled can', ar:'علبة مبردة', ku:'قوتووی سارد'},
     price:1500, emoji:'🍊', gradient:'from-brand/25 to-zinc-800/15',
-    image:'image/mirandaorange.PNG',
+    image:'image/mirandaorange.webp',
     tags:[], modifierSet:'drink', available:true },
 
   { id:'seven-up', category:'drinks',
     name:{en:'7 Up', ar:'سفن أب', ku:'سێڤن ئەپ'},
     desc:{en:'Chilled can', ar:'علبة مبردة', ku:'قوتووی سارد'},
     price:1500, emoji:'🥤', gradient:'from-zinc-500/20 to-zinc-700/10',
-    image:'image/7up.PNG',
+    image:'image/7up.webp',
     tags:[], modifierSet:'drink', available:true },
 ];
 
@@ -1047,11 +1050,11 @@ const STORE = {
 };
 
 const HERO_SLIDES = [
-  { src: 'image/slide1.PNG', alt: 'Smashed Burger' },
-  { src: 'image/slide2.PNG', alt: 'Smashed Burger' },
-  { src: 'image/slide3.PNG', alt: 'Smashed Burger' },
-  { src: 'image/slide4.PNG', alt: 'Smashed Burger' },
-  { src: 'image/slide5.PNG', alt: 'Smashed Burger' },
+  { src: 'image/slide1.webp', alt: 'Smashed Burger' },
+  { src: 'image/slide2.webp', alt: 'Smashed Burger' },
+  { src: 'image/slide3.webp', alt: 'Smashed Burger' },
+  { src: 'image/slide4.webp', alt: 'Smashed Burger' },
+  { src: 'image/slide5.webp', alt: 'Smashed Burger' },
 ];
 const HERO_INTERVAL_MS = 5000;
 
